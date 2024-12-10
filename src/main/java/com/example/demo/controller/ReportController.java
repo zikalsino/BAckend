@@ -1,11 +1,15 @@
 package com.example.demo.controller;
 
+import com.example.demo.Handlers.ReportNotFoundException;
 import com.example.demo.entity.Report;
 
 import com.example.demo.service.Impl.ReportService;
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +31,7 @@ public class ReportController {
     }
 
     // Récupérer un rapport par ID
-    @GetMapping("/{id}")
+    @GetMapping("/report/{id}")
     public ResponseEntity<Report> getReportById(@PathVariable long id) {
         Optional<Report> report = reportService.getReportById(id);
         return report.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -52,5 +56,20 @@ public class ReportController {
     public ResponseEntity<Void> deleteReport(@PathVariable long id) {
         reportService.deleteReport(id);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/download/{id}")
+    public ResponseEntity<Resource> downloadReport(@PathVariable Long id) {
+        try {
+            // Appelle le service pour récupérer le fichier
+            Resource file = reportService.getReportFile(id);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF) // Type de fichier, à adapter si ce n'est pas un PDF
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"report-" + id + ".pdf\"")
+                    .body(file);
+        } catch (ReportNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 }

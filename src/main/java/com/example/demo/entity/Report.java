@@ -16,5 +16,9 @@ public class Report {
     private String title;
     private String description;
     private LocalDate createdDate;
+
+
+
+    private String filePath;
 }
 

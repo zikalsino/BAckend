@@ -55,10 +55,10 @@ public class RecruterController {
 
 
 
-    @GetMapping("/active")//ok
-    public List<JobOffer> getActiveJobOffers() {
-        return jobOfferService.getActiveJobOffers();
-    }
+//    @GetMapping("/active")//ok
+//    public List<JobOffer> getActiveJobOffers() {
+//        return jobOfferService.getActiveJobOffers();
+//    }
 
 
 
@@ -135,8 +135,8 @@ public class RecruterController {
 
 
     @GetMapping("/published")
-    public ResponseEntity<List<JobOffer>> getPublishedOffers() {
-        List<JobOffer> publishedOffers = recruterService.getPublishedOffers();
+    public ResponseEntity<List<JobOffer>> getPublishedJobOffers() {
+        List<JobOffer> publishedOffers = jobOfferService.getPublishedJobOffers();
         return ResponseEntity.ok(publishedOffers);
     }
 }

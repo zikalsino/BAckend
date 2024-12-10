@@ -57,7 +57,9 @@ public class AuthController {
     public ResponseEntity<User> getCurrentUser(Authentication authentication) {
         System.out.println("bonjour");
         User user = userService.findByEmail(authentication.getName())
+
                 .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
+
         return ResponseEntity.ok(user);
     }
 

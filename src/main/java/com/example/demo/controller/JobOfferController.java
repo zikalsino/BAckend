@@ -22,12 +22,8 @@ public class JobOfferController {
     private final JobOfferService jobOfferService;
 
     @GetMapping("/search")
-    public ResponseEntity<List<JobOffer>> searchJobOffers(
-            @RequestParam(required = false) String keyword,
-            @RequestParam(required = false) String location,
-            @RequestParam(required = false) String description) {
-
-         List<JobOffer> offer = jobOfferService.searchJobOffers(keyword, location, description);
-        return new ResponseEntity<>(offer, HttpStatus.OK);
+    public ResponseEntity<List<JobOffer>> searchJobOffers(@RequestParam String query) {
+        List<JobOffer> results = jobOfferService.searchOffers(query);
+        return ResponseEntity.ok(results);
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -32,15 +33,26 @@ public class JobOfferService implements IJobOfferService {
         Pageable pageable = PageRequest.of(page, size);
         return jobOfferRepository.findAll(pageable);
     }
-     public List<JobOffer> searchJobOffers(String keyword, String location, String Description) {
-        // Rechercher les offres d'emploi en fonction des critères
-        return jobOfferRepository.findByKeywordAndLocationAndDescription(keyword, location, Description);
+
+    public List<JobOffer> getPublishedJobOffers() {
+        // Filtrer les offres dont 'publier' est vrai
+        return jobOfferRepository.findByPublierTrue();
+    }
+    public List<JobOffer> searchOffers(String query) {
+        return jobOfferRepository.findAll().stream()
+                .filter(offer ->
+                        (offer.getTitle() != null && offer.getTitle().toLowerCase().contains(query.toLowerCase())) ||
+                                (offer.getDescription() != null && offer.getDescription().toLowerCase().contains(query.toLowerCase())) ||
+                                (offer.getLocation() != null && offer.getLocation().toLowerCase().contains(query.toLowerCase())) ||
+                                (offer.getRequirements() != null && offer.getRequirements().toLowerCase().contains(query.toLowerCase()))
+                )
+                .collect(Collectors.toList());
     }
 
 
-    public List<JobOffer> getActiveJobOffers() {
-        return jobOfferRepository.findByIsActiveTrue();
-    }
+//    public List<JobOffer> getActiveJobOffers() {
+//        return jobOfferRepository.findByIsActiveTrue();
+//    }
 
     public Optional<JobOffer> getJobOfferById(Long id) {
         return jobOfferRepository.findById(id);

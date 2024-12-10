@@ -14,9 +14,9 @@ public interface IJobOfferService {
 
     public Page<JobOffer> getAllJobOffers(int page, int size);
 
-    public List<JobOffer> getActiveJobOffers() ;
+    //public List<JobOffer> getActiveJobOffers() ;
     public Optional<JobOffer> getJobOfferById(Long id) ;
-
+    public List<JobOffer> getPublishedJobOffers();
     public JobOffer createJobOffer(JobOffer jobOffer, Long Id);
 
     public JobOffer updateJobOffer(Long id, JobOffer jobOfferDetails) ;
@@ -24,4 +24,5 @@ public interface IJobOfferService {
     public JobOffer saveJobOffer(JobOffer jobOffer,Long Id);
     public void deleteJobOffer(Long id) ;
     public JobOffer publieOffer(Long id, boolean publie);
+    public List<JobOffer> searchOffers(String query);
 }

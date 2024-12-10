@@ -26,9 +26,10 @@ public class NotificationService {
     }
 
 
-    public List<Notification> getUnreadNotifications(Long notificationId) {
-        return notificationRepository.findByCandidateIdAndIsReadFalse(notificationId);
+    public List<Notification> getUnreadNotifications(Long candidateId) {
+        return notificationRepository.findByCandidateIdAndIsReadFalse(candidateId);
     }
+
 
     public void markNotificationAsRead(Long notificationId) {
         List<Notification> notifications = notificationRepository.findByCandidateIdAndIsReadFalse(notificationId);

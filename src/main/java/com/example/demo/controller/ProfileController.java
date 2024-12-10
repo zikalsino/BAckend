@@ -4,6 +4,7 @@ import com.example.demo.entity.Candidate;
 import com.example.demo.entity.Competence;
 import com.example.demo.entity.Experience;
 
+import com.example.demo.entity.User;
 import com.example.demo.service.Impl.CandidateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,8 @@ public class ProfileController {
     private final CandidateService candidateService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Candidate> getProfile(@PathVariable Long id) {
-        Candidate candidate = candidateService.getCandidateById(id);
+    public ResponseEntity<User> getProfile(@PathVariable Long id) {
+        User candidate = candidateService.getCandidateById(id);
         return ResponseEntity.ok(candidate);
     }
 
@@ -48,5 +49,17 @@ public class ProfileController {
     public ResponseEntity<Void> uploadCV(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
         candidateService.uploadCV(id, String.valueOf(file));
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{candidateId}/experiences")
+    public ResponseEntity<List<Experience>> getExperiences(@PathVariable Long candidateId) {
+        List<Experience> experiences = candidateService.getExperiencesByCandidateId(candidateId);
+        return ResponseEntity.ok(experiences);
+    }
+
+    @GetMapping("/{candidateId}/competences")
+    public ResponseEntity<List<Competence>> getCompetences(@PathVariable Long candidateId) {
+        List<Competence> competences = candidateService.getCompetencesByCandidateId(candidateId);
+        return ResponseEntity.ok(competences);
     }
 }

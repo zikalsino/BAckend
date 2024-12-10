@@ -87,7 +87,7 @@ public class RecruterService implements IRecruterService {
 
     @Override
     public List<JobOffer> getPublishedOffers() {
-        return jobOfferRepository.findByIsActiveTrue(); // Vérifie si le champ 'published' est vrai
+        return jobOfferRepository.findByPublierTrue(); // Vérifie si le champ 'published' est vrai
     }
 
 

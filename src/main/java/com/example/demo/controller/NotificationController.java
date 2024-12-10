@@ -34,13 +34,7 @@ public class NotificationController {
         return ResponseEntity.ok(notifications);
     }
 
-//    @PostMapping("/{candidateId}/mark-as-read")
-//    public ResponseEntity<String> markNotificationsAsRead(
-//            @PathVariable Long candidateId) {
-//
-//        notificationService.markNotificationsAsRead(candidateId);
-//        return ResponseEntity.ok("Toutes les notifications ont été marquées comme lues !");
-//    }
+
     // Dans le NotificationController
     @PutMapping("/notifications/mark-as-read/{notificationId}")
     public ResponseEntity<String> markNotificationAsRead(@PathVariable Long notificationId) {

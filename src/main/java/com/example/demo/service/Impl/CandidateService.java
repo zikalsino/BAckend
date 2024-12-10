@@ -147,6 +147,15 @@ public class CandidateService implements ICandidateService {
         competence.setNom(competence.getNom());
         return competenceRepository.save(competence);
     }
+    @Override
+    public List<Experience> getExperiencesByCandidateId(Long candidateId) {
+        return experienceRepository.findByCandidateId(candidateId);
+    }
+
+    @Override
+    public List<Competence> getCompetencesByCandidateId(Long candidateId) {
+        return competenceRepository.findByCandidateId(candidateId);
+    }
 
 }
 
